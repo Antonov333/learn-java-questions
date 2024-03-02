@@ -1,5 +1,7 @@
 package com.example.learnjavaquestions;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,7 @@ public class QuestionsController {
         return "<br><br><h3>Welcome to Questions Controller</h3>";
     }
     @PostMapping("")
+    @ApiResponses(@ApiResponse(responseCode = "400", description = "Null or empty InterviewQuestion supplied"))
     public ResponseEntity<InterviewQuestion> createInterviewQuestion(InterviewQuestion question){
         return questionService.createQuestion(question);
     }
@@ -29,5 +32,10 @@ public class QuestionsController {
     @GetMapping("/learn-all")
     public List<InterviewQuestion> learnAll(){
         return questionService.learnAll();
+    }
+
+    @GetMapping("/random")
+    public ResponseEntity<InterviewQuestion> randomQuestion() {
+        return questionService.randomQuestion();
     }
 }
